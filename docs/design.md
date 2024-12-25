@@ -48,5 +48,3 @@ ghcr.io/telepace/voiceflow
 
 后面的版本号参考 telepace 的版本号设计规则。
 
-
-## 
