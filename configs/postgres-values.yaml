@@ -1,0 +1,4 @@
+auth:
+  username: feedback_user
+  password: feedback_password
+  database: feedback_db

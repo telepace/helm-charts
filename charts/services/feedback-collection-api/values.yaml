@@ -121,3 +121,31 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+redis:
+  host: redis.default.svc.cluster.local
+  port: 6379
+  password:
+    valueFrom:
+      secretKeyRef:
+        name: redis-credentials
+        key: redis-password
+
+postgres:
+  host: postgres.default.svc.cluster.local
+  port: 5432
+  username:
+    valueFrom:
+      secretKeyRef:
+        name: postgres-credentials
+        key: postgres-username
+  password:
+    valueFrom:
+      secretKeyRef:
+        name: postgres-credentials
+        key: postgres-password
+  database:
+    valueFrom:
+      secretKeyRef:
+        name: postgres-credentials
+        key: postgres-database

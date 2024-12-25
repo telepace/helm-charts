@@ -1,0 +1,6 @@
+auth:
+  enabled: true
+  password: redispassword
+
+replica:
+  replicaCount: 1
