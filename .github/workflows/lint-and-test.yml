@@ -75,17 +75,24 @@ jobs:
         with:
           config: .github/configs/kind-config.yaml
 
-      - name: Deploy latest OpenIM CRDs when testing OpenIM extensions
+      - name: Deploy latest Telepace CRDs when testing Telepace extensions
         if: |
-          contains(steps.list-changed.outputs.changed_charts, 'openim-web') ||
-          contains(steps.list-changed.outputs.changed_charts, 'openim-admin')
+          contains(steps.list-changed.outputs.changed_charts, 'analysis') ||
+          contains(steps.list-changed.outputs.changed_charts, 'collection') ||
+          contains(steps.list-changed.outputs.changed_charts, 'web') ||
+          contains(steps.list-changed.outputs.changed_charts, 'feedback-collection-api') ||
+          contains(steps.list-changed.outputs.changed_charts, 'voiceflow')
         run: |
-          helm repo add openim https://openimsdk.github.io/helm-charts/
-          helm openim build charts/openim-web/
-          helm template charts/openim-web/ --set server.extensions.enabled=true -s templates/crds/* | kubectl apply -f -
+          helm repo add telepace https://helm.telepace.com/
+          helm telepace build charts/analysis/
+          helm template charts/analysis/ --set server.extensions.enabled=true -s templates/crds/* | kubectl apply -f -
 
-      - name: Skip HPA tests of OpenIM
-        if: contains(steps.list-changed.outputs.changed_charts, 'openim-admin')
+      - name: Skip HPA tests of Telepace
+        if: contains(steps.list-changed.outputs.changed_charts, 'analysis') ||
+          contains(steps.list-changed.outputs.changed_charts, 'collection') ||
+          contains(steps.list-changed.outputs.changed_charts, 'web') ||
+          contains(steps.list-changed.outputs.changed_charts, 'feedback-collection-api') ||
+          contains(steps.list-changed.outputs.changed_charts, 'voiceflow')
         run: |
           ## Metrics API not available in kind cluster
           rm charts/argo-cd/ci/ha-autoscaling-values.yaml
