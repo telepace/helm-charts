@@ -1,0 +1,50 @@
+name: Helm Template Comment
+
+on:
+  pull_request:
+  pull_request_target:
+
+jobs:
+  helm-template-comment:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out repository
+      uses: actions/checkout@v4
+
+    - name: Install Helm
+      run: |
+        curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+        chmod 700 get_helm.sh
+        ./get_helm.sh
+
+    - name: Run Helm Template
+      id: helm_template
+      run: |
+        output_file="/tmp/out.md"
+        echo "## Kubernetes Templates in telepace Namespace" > $output_file
+
+        # Function to append Kubernetes resources to Markdown
+        append_k8s_resource() {
+            resource_type=$1
+            echo "<details><summary>telepace templates get $resource_type</summary>" >> $output_file
+            echo '' >> $output_file
+            echo '```markdown' >> $output_file
+            helm template $resource_type | tee -a $output_file
+            echo '```' >> $output_file
+            echo '</details>' >> $output_file
+        }
+
+        append_k8s_resource "./charts/base -f k8s-base-config.yaml -f config-base.yaml"
+        append_k8s_resource "./charts/collection -f k8s-collection-config.yaml -f config-collection.yaml"
+        append_k8s_resource "./charts/feedback-collection-api -f k8s-feedback-collection-api-config.yaml -f config-feedback-collection-api.yaml"
+        append_k8s_resource "./charts/voiceflow -f k8s-voiceflow-config.yaml -f config-voiceflow.yaml"
+        append_k8s_resource "./charts/web -f k8s-web-config.yaml -f config-web.yaml"
+
+    - name: Comment PR with file
+      uses: thollander/actions-comment-pull-request@v2
+      with:
+        filePath: /tmp/out.md
+        comment_tag: nrt_file
+        reactions: eyes, rocket
+        mode: recreate
+        GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
