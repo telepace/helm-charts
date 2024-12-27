@@ -46,5 +46,5 @@ ghcr.io/telepace/ai_feedback_django
 ghcr.io/telepace/voiceflow
 ```
 
-后面的版本号参考 telepace 的版本号设计规则。
+后面的版本号参考 telepace 的版本号设计规则。[telepace 版本号设计规则](https://github.com/telepace/telepace/blob/main/docs/version.md)
 

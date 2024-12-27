@@ -1,0 +1,50 @@
+# 开发环境特定配置
+analysis:
+  image:
+    tag: latest
+  env:
+    TELEPACE_ENVIRONMENT: "development"
+  serviceMonitor:
+    enabled: true
+
+collection:
+  image:
+    tag: latest
+  env:
+    TELEPACE_ENVIRONMENT: "development"
+  serviceMonitor:
+    enabled: true
+
+feedback-collection-api:
+  image:
+    tag: latest
+  env:
+    DJANGO_ALLOWED_HOSTS: "localhost,127.0.0.1,django"
+  serviceMonitor:
+    enabled: true
+
+web:
+  image:
+    tag: latest
+  env:
+    NEXT_PUBLIC_API_URL: "http://kong-proxy:8000/api"
+    NEXT_PUBLIC_WEB_URL: "http://dev.example.com"
+    NEXT_PUBLIC_WEBSOCKET_URL: "wss://dev-api.telepace.cc/ws"
+    NEXT_PUBLIC_ENV: "development"
+
+# 开发环境中间件配置
+redis:
+  replica:
+    replicaCount: 0
+  master:
+    persistence:
+      size: 1Gi
+
+postgres:
+  persistence:
+    size: 5Gi
+
+prometheus:
+  server:
+    persistentVolume:
+      size: 5Gi

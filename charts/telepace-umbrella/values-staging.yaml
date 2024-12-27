@@ -1,0 +1,27 @@
+# 预发环境特定配置
+analysis:
+  replicaCount: 2
+  env:
+    TELEPACE_ENVIRONMENT: "staging"
+
+collection:
+  replicaCount: 2
+  env:
+    TELEPACE_ENVIRONMENT: "staging"
+
+web:
+  replicaCount: 2
+  env:
+    NEXT_PUBLIC_WEB_URL: "http://staging.example.com"
+    NEXT_PUBLIC_WEBSOCKET_URL: "wss://staging-api.telepace.cc/ws"
+    NEXT_PUBLIC_ENV: "staging"
+
+# 预发环境中间件配置
+redis:
+  master:
+    persistence:
+      size: 5Gi
+
+postgres:
+  persistence:
+    size: 8Gi

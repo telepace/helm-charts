@@ -1,0 +1,34 @@
+# 生产环境特定配置
+analysis:
+  replicaCount: 3
+  env:
+    TELEPACE_ENVIRONMENT: "production"
+
+collection:
+  replicaCount: 3
+  env:
+    TELEPACE_ENVIRONMENT: "production"
+
+web:
+  replicaCount: 3
+  env:
+    NEXT_PUBLIC_WEB_URL: "http://www.example.com"
+    NEXT_PUBLIC_WEBSOCKET_URL: "wss://api.telepace.cc/ws"
+    NEXT_PUBLIC_ENV: "production"
+
+# 生产环境中间件配置
+redis:
+  replica:
+    replicaCount: 2
+  master:
+    persistence:
+      size: 10Gi
+
+postgres:
+  persistence:
+    size: 20Gi
+
+prometheus:
+  server:
+    persistentVolume:
+      size: 50Gi

@@ -1,6 +1,6 @@
 apiVersion: v2
 name: analysis
-description: A Helm chart for Kubernetes
+description: Telepace Analysis service
 
 # A chart can be either an 'application' or a 'library' chart.
 #

@@ -1,0 +1,63 @@
+apiVersion: v2
+name: telepace-umbrella
+description: A Helm chart for Kubernetes
+
+# A chart can be either an 'application' or a 'library' chart.
+#
+# Application charts are a collection of templates that can be packaged into versioned archives
+# to be deployed.
+#
+# Library charts provide useful utilities or functions for the chart developer. They're included as
+# a dependency of application charts to inject those utilities and functions into the rendering
+# pipeline. Library charts do not define any templates and therefore cannot be deployed.
+type: application
+
+# This is the chart version. This version number should be incremented each time you make changes
+# to the chart and its templates, including the app version.
+# Versions are expected to follow Semantic Versioning (https://semver.org/)
+version: 0.1.0
+
+# This is the version number of the application being deployed. This version number should be
+# incremented each time you make changes to the application. Versions are not expected to
+# follow Semantic Versioning. They should reflect the version the application is using.
+# It is recommended to use it with quotes.
+appVersion: "1.16.0"
+
+dependencies:
+  # --- 微服务 ---
+  - name: analysis
+    version: "1.0.0"
+    repository: "file://../services/analysis"
+  - name: collection
+    version: "1.0.0"
+    repository: "file://../services/collection"
+  - name: feedback-collection-api
+    version: "1.0.0"
+    repository: "file://../services/feedback-collection-api"
+  - name: voiceflow
+    version: "1.0.0"
+    repository: "file://../services/voiceflow"
+  - name: web
+    version: "1.0.0"
+    repository: "file://../services/web"
+
+  # --- 中间件 ---
+  - name: kong
+    version: "1.0.0"
+    repository: "file://../../middlewares/kong"
+    # 或者官方 chart, repository: "https://charts.konghq.com"
+  - name: redis
+    version: "17.17.1"
+    repository: "file://../../middlewares/redis"
+  - name: postgres
+    version: "12.12.10"
+    repository: "file://../../middlewares/postgres"
+  - name: prometheus
+    version: "15.8.0"
+    repository: "https://prometheus-community.github.io/helm-charts"
+  - name: grafana
+    version: "6.39.5"
+    repository: "https://grafana.github.io/helm-charts"
+  - name: loki
+    version: "2.25.0"
+    repository: "https://grafana.github.io/helm-charts"
