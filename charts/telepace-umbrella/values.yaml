@@ -1,4 +1,4 @@
-# Default values for base.
+# Default values for telepace-umbrella.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
@@ -121,3 +121,65 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+
+analysis:
+  replicaCount: 1
+  image:
+    repository: ghcr.io/telepace/analysis
+    tag: latest
+  env:
+    TELEPACE_ENVIRONMENT: "production"
+  service:
+    port: 80
+
+collection:
+  replicaCount: 1
+  image:
+    repository: ghcr.io/telepace/collection
+    tag: latest
+  env:
+    TELEPACE_ENVIRONMENT: "production"
+  service:
+    port: 80
+
+feedback-collection-api:
+  replicaCount: 1
+  image:
+    repository: ghcr.io/telepace/ai_feedback_django
+    tag: latest
+  env:
+    DJANGO_ALLOWED_HOSTS: "localhost,127.0.0.1,django"
+  service:
+    port: 8000
+
+voiceflow:
+  replicaCount: 1
+  image:
+    repository: ghcr.io/telepace/voiceflow
+    tag: v0.5.0-beta.0
+  service:
+    port: 18080
+
+web:
+  replicaCount: 1
+  image:
+    repository: telepace/web
+    tag: latest
+  env:
+    NEXT_PUBLIC_API_URL: "http://kong-proxy:8000/api"
+    NEXT_PUBLIC_WEB_URL: "http://example.com"
+    NEXT_PUBLIC_WEBSOCKET_URL: "wss://api.telepace.cc/ws"
+    NEXT_PUBLIC_ENV: "production"
+    NEXT_PUBLIC_ENABLE_TTS: "true"
+  service:
+    port: 
+    
+# 如果要同时部署中间件，也可以配置:
+# postgres:
+#   ...
+# redis:
+#   ...
+# kong:
+#   ...
+# ...

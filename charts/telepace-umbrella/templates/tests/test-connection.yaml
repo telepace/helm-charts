@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "telepace-umbrella.fullname" . }}-test-connection"
+  labels:
+    {{- include "telepace-umbrella.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args: ['{{ include "telepace-umbrella.fullname" . }}:{{ .Values.service.port }}']
+  restartPolicy: Never

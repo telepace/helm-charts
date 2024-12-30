@@ -1,0 +1,17 @@
+analysis:
+  - charts/services/analysis/**/*
+
+base:
+  - charts/services/base/**/*
+
+collection:
+  - charts/services/collection/**/*
+
+feedback-collection-api:
+  - charts/services/feedback-collection-api/**/*
+
+voiceflow:
+  - charts/services/voiceflow/**/*
+
+web:
+  - charts/services/web/**/*
